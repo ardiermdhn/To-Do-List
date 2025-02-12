@@ -21,14 +21,14 @@
         <div class="max-w-7xl mx-auto">
             <div class="flex items-center justify-between gap-3">
                 <div class="flex items-center justify-start my-10">
-                    <svg class="w-16 h-16 mr-1 mb-3 text-gray-800 dark:text-blue-300" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <svg class="w-20 h-20 mb-3 text-gray-800 dark:text-blue-500" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="#A1E3F9" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-3 5h3m-6 0h.01M12 16h3m-6 0h.01M10 3v4h4V3h-4Z" />
                     </svg>
                     <div>
                         <h1
-                            class="text-3xl font-bold galindo-regular pt-1 text-center tracking-wider text-gray-200 bg-blue-500 rounded-lg">
+                            class="text-3xl font-bold galindo-regular pt-1 text-center tracking-wider text-blue-200 bg-blue-500 rounded-lg">
                             Donezo
                         </h1>
                         <p class="text-sm px-1 pb-1 mt-1 font-thin text-center text-gray-200 tracking-wider">
@@ -113,18 +113,9 @@
                                         Set Waktu
                                     </label>
                                     <div class="relative">
-                                        <div class="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
-                                            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                viewBox="0 0 20 20">
-                                                <path
-                                                    d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                                            </svg>
-                                        </div>
-
                                         <input id="datetime-local" name="Tanggal" type="datetime-local"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5
-                                          dark:bg-gray-500 dark:border-gray-400 dark:placeholder-gray-300 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+                                          dark:bg-gray-500 dark:border-gray-400 dark:placeholder-gray-300 dark:text-gray-200 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             placeholder="Pilih Tanggal">
                                     </div>
                                 </div>
@@ -225,6 +216,19 @@
                                 <!-- Grid untuk Tanggal dan Prioritas -->
                                 <div class="grid gap-4 grid-cols-2 mb-7">
                                     <div>
+                                        <label for="datetime-local"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                            Set Waktu
+                                        </label>
+                                        <div class="relative">
+                                            <input id="datetime-local" name="Tanggal" type="datetime-local"
+                                                value="{{ $Task->Tanggal }}"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+                                              dark:bg-gray-500 dark:border-gray-400 dark:placeholder-gray-300 dark:text-gray-200 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder="Pilih Tanggal">
+                                        </div>
+                                    </div>
+                                    {{-- <div>
                                         <label for="edit-datepicker"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                             Set Waktu
@@ -235,7 +239,7 @@
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-500 dark:border-gray-400 dark:placeholder-gray-300 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder="Pilih Tanggal">
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <div>
                                         <label for="edit-priority"
@@ -283,9 +287,16 @@
                                 {{ $Task->status === 'completed' ? 'checked' : '' }}>
                         </form>
                         <div class="grid pl-5">
+                            @if ($Task->status === 'pending')
                             <span class="text-xl poppins-semibold text-gray-200 mb-5">
                                 {{ $Task->Task }}
                             </span>
+                            @else
+                            <span class="text-xl poppins-semibold text-gray-200 mb-5 line-through text-gray-400">
+                                {{ $Task->Task }}
+                            </span>
+                            @endif
+
                             <div class="flex gap-3">
                                 <span class="text-sm font-thin text-gray-200">
                                     {{ \Carbon\Carbon::parse($Task->Tanggal)->translatedFormat('H:i, d F Y') }}
@@ -363,7 +374,6 @@
                     </div>
                 </div>
             @empty
-
             @endforelse
         </div>
     </section>

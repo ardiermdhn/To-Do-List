@@ -18,6 +18,7 @@ class TaskController extends Controller
                 ->orWhere('Prioritas', 'like','%'.$search.'%')
                 ->orWhere('status', 'like','%'.$search.'%')
                 ->orderByRaw("FIELD(status,'pending','completed') ASC")
+                ->orderBy('created_at', 'desc')
                 ->get();
 
 
@@ -69,10 +70,15 @@ class TaskController extends Controller
     {
         $request->validate([
             'Task' => 'required|string|max:255',
+            'Prioritas' => 'required',
+            'Tanggal' => 'required',
         ]);
 
         $Task->update([
             'Task' => $request->Task,
+            'status' => 'pending',
+            'Prioritas' => $request->Prioritas,
+            'Tanggal' => $request->Tanggal,
         ]);
 
         return redirect()->back()->with('success', 'Tugas berhasil diperbarui!');
